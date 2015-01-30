@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<!-- Bootstrap core CSS -->
+<link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="../../../resources/css/jumbotron-narrow.css" th:href="@{/resources/css/jumbotron-narrow.css}" rel="stylesheet" />
+
+</head>
+	
+<body>
+	<div class="container">
+
+		<div class="header" th:fragment="navigation">
+			<ul class="nav nav-pills pull-right">
+				<li></li>
+				<li><a th:href="@{/}" href="/">Home</a></li>
+				<li><a href="about.html">About</a></li>
+				<li><a href="contact.html">Contact</a></li>
+				<th:block sec:authorize="isAnonymous()">
+					<li><a th:href="@{/register}" href="register.html">Register</a></li>
+					<li><a th:href="@{/login}">Login</a></li>
+				</th:block>
+				<li sec:authorize="isAuthenticated()" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-user"></span>
+						<span sec:authentication="name">Username</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li>
+							<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}" href="admin.html">Admin</a>
+						</li>
+						<li><a th:href="@{/user/viewProfile}" href="profile.html">Profile</a></li>
+						<li class="divider"></li>
+						<li>
+							<form id="logout-form" class="navbar-form" th:action="@{/logout}" method="post">
+								<!--<a href="javascript:{}" onclick="$('#logout-form').submit(); return false;">Logout</a>-->
+								<button class="btn btn-link">Logout</button>
+							</form>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<h3 class="text-muted">Spring Security Reference</h3>
+		</div>
+		
+		<div class="jumbotron" th:fragment="jumbotron">
+			<h1>Welcome!</h1>
+			<p class="lead"></p>
+			<p>
+				Please register by clicking the button below!
+			</p>
+			<p>
+				<a class="btn btn-lg btn-success" th:href="@{/register}" href="register.html" role="button">
+					Register!
+				</a>
+			</p>
+		</div>
+
+		<div th:fragment="alerts">
+			<div name="alert" th:each="alert : ${alerts.getAlerts()}" class="alert" 
+				th:classappend="${alert.getValue()}" th:text="${alert.getKey()}"></div>
+		</div>
+
+	</div>
+	
+	<div th:replace="fragments/foot :: bootstrapJs">
+		<script src="../../../resources/js/jquery-1.11.1.min.js"></script>
+		<script src="../../../resources/js/bootstrap.min.js"></script>
+	</div>
+
+</body>
+</html>

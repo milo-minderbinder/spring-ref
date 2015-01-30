@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<head>
+<!-- Bootstrap core CSS -->
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="../../../resources/css/jumbotron-narrow.css" rel="stylesheet" />
+</head>
+
+<body>
+
+	<div th:fragment="copyright" class="footer">
+		<p>&copy; InSecurity.co 2014</p>
+	</div>
+
+	<div th:fragment="viewportWorkaround">
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="../../../resources/js/ie10-viewport-bug-workaround.js" 
+			th:src="@{/resources/js/ie10-viewport-bug-workaround.js}"></script>
+	</div>
+	
+	<div th:fragment="bootstrapJs">
+		<script th:src="@{/resources/js/jquery-1.11.1.min.js}" src="../../../resources/js/jquery-1.11.1.min.js"></script>
+		<script th:src="@{/resources/js/bootstrap.min.js}" src="../../../resources/js/bootstrap.min.js"></script>
+	</div>
+</body>
+</html>

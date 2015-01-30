@@ -1,0 +1,10 @@
+*.log
+*.swp
+*.jks
+*.py
+*.pyc
+*.txt
+gradlew
+gradlew.bat
+gradle/
+.gradle/
