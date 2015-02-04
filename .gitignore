@@ -4,5 +4,7 @@
 *.py
 *.pyc
 *.txt
-.gradle/
 build/
+.classpath
+.project
+.settings/
