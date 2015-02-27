@@ -21,7 +21,7 @@ public class JasyptConfig {
 	@Bean
 	static StringPBEConfig environmentVariablesConfiguration() {
 		EnvironmentStringPBEConfig config = new EnvironmentStringPBEConfig();
-		config.setAlgorithm("PBEWithMD5AndDES");
+		config.setAlgorithm("PBEWithSHA1AndDESEDE");
 		config.setPasswordEnvName("SPRINGREF_CONFIG_PW");
 		return config;
 	}
