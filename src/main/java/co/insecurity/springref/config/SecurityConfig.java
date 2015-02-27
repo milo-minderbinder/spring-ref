@@ -17,10 +17,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import co.insecurity.springref.core.domain.UserRole;
-import co.insecurity.springref.core.security.RateLimitingDaoAuthenticationProvider;
 import co.insecurity.springref.event.users.CreateUserEvent;
 import co.insecurity.springref.event.users.UserInfo;
 import co.insecurity.springref.persistence.service.UserPersistenceService;
+import co.insecurity.springref.security.RateLimitingDaoAuthenticationProvider;
 
 
 @Configuration

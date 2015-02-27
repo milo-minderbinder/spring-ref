@@ -1,4 +1,4 @@
-package co.insecurity.springref.core.security;
+package co.insecurity.springref.security;
 
 import org.springframework.security.core.AuthenticationException;
 
