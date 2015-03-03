@@ -20,33 +20,34 @@ ext {
 	jasyptSpring31Version = "1.9.2"
 	
 	// MVC
-	springVersion = "4.0.8.RELEASE"
+	springVersion = "4.1.5.RELEASE"
 	
 	// Database
-	h2Version = "1.4.181"
+	postgresVersion = "9.4-1201-jdbc41"
+	h2Version = "1.4.185"
 	springDataJpaVersion = "1.7.1.RELEASE"
 	hibernateJpaApiVersion = "1.0.0.Final"
-	hibernateEntityManagerVersion = "4.3.6.Final"
+	hibernateEntityManagerVersion = "4.3.8.Final"
 	cglibVersion = "3.1"
 	
 	// Security
-	springSecurityVersion = "3.2.5.RELEASE"
+	springSecurityVersion = "3.2.6.RELEASE"
 	springSecuritySamlVersion = "1.0.0.RC2"
 	
 	// Template engine
-	thymeleafSpringVersion = "2.1.3.RELEASE"
+	thymeleafSpringVersion = "2.1.4.RELEASE"
 	thymeleafSpringSecurityVersion = "2.1.1.RELEASE"
 	
 	// Validation
 	javaxValidationApiVersion = "1.1.0.Final"
-	hibernateValidatorVersion = "5.0.1.Final"
+	hibernateValidatorVersion = "5.1.3.Final"
 	
 	// Logging
-	slf4jVersion = "1.7.5"
+	slf4jVersion = "1.7.10"
 	
 	// Testing
-	junitVersion = "4.11"
-	mockitoVersion = "1.9.5"
+	junitVersion = "4.12"
+	mockitoVersion = "1.10.19"
 	hamcrestVersion = "1.3"
 }	
 	
@@ -107,6 +108,7 @@ dependencies {
 		compile "org.springframework:$it:$springVersion"
 	}
 	compile "cglib:cglib:$cglibVersion"
+	compile "org.postgresql:postgresql:$postgresVersion"
 	runtime "com.h2database:h2:$h2Version"
 	
 	// Security

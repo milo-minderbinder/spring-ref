@@ -1,20 +1,21 @@
 package co.insecurity.springref.config;
 
+import java.sql.SQLException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.sql.SQLException;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,15 +28,29 @@ import co.insecurity.springref.persistence.repository.UserRepository;
 @EnableTransactionManagement
 public class JPAConfig {
 	
+	/*
 	@Bean
 	public DataSource dataSource() throws SQLException {
 		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 		return builder.setType(EmbeddedDatabaseType.H2).build();
 	}
+	*/
+	
+	@Bean
+	public DataSource dataSource() throws SQLException {
+		DriverManagerDataSource source = new DriverManagerDataSource();
+		source.setDriverClassName(org.postgresql.Driver.class.getName());
+		source.setUrl("jdbc:postgresql://localhost:5432/springref_db");
+		source.setUsername("postgres");
+		source.setPassword("password");
+		return source;
+	}
 
 	@Bean
 	public EntityManagerFactory entityManagerFactory() throws SQLException {
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		vendorAdapter.setDatabase(Database.POSTGRESQL);
+		vendorAdapter.setShowSql(true);
 		vendorAdapter.setGenerateDdl(true);
 
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
