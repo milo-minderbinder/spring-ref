@@ -23,6 +23,7 @@ ext {
 	springVersion = "4.1.5.RELEASE"
 	
 	// Database
+	postgresVersion = "9.4-1201-jdbc41"
 	h2Version = "1.4.185"
 	springDataJpaVersion = "1.7.1.RELEASE"
 	hibernateJpaApiVersion = "1.0.0.Final"
@@ -107,6 +108,7 @@ dependencies {
 		compile "org.springframework:$it:$springVersion"
 	}
 	compile "cglib:cglib:$cglibVersion"
+	compile "org.postgresql:postgresql:$postgresVersion"
 	runtime "com.h2database:h2:$h2Version"
 	
 	// Security
