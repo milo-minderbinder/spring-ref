@@ -32,10 +32,10 @@ public class JPAConfig {
 	@Value("${database.url}")
 	private String databaseURL;
 	
-	@Value("${database.username")
+	@Value("${database.username}")
 	private String databaseUsername;
 	
-	@Value("${database.password")
+	@Value("${database.password}")
 	private String databasePassword;
 	
 	/*
