@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,15 @@ import co.insecurity.springref.persistence.repository.UserRepository;
 @EnableTransactionManagement
 public class JPAConfig {
 	
+	@Value("${database.url}")
+	private String databaseURL;
+	
+	@Value("${database.username")
+	private String databaseUsername;
+	
+	@Value("${database.password")
+	private String databasePassword;
+	
 	/*
 	@Bean
 	public DataSource dataSource() throws SQLException {
@@ -40,9 +50,9 @@ public class JPAConfig {
 	public DataSource dataSource() throws SQLException {
 		DriverManagerDataSource source = new DriverManagerDataSource();
 		source.setDriverClassName(org.postgresql.Driver.class.getName());
-		source.setUrl("jdbc:postgresql://localhost:5432/springref_db");
-		source.setUsername("postgres");
-		source.setPassword("password");
+		source.setUrl(databaseURL);
+		source.setUsername(databaseUsername);
+		source.setPassword(databasePassword);
 		return source;
 	}
 
