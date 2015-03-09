@@ -30,7 +30,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		public void sessionDestroyed(HttpSessionEvent event) {
 			LOG.info("Session destroyed");
 		}
-		
 	}
 	
 	@Override

@@ -37,7 +37,7 @@ public class UserPersistenceEventHandler implements UserPersistenceService {
 		else {
 			User user = User.fromUserInfo(userInfo);
 			user.setEnabled(true);
-			if (user.getRoles().size() == 0) 
+			if (!user.getRoles().contains(UserRole.USER)) 
 				user.addRole(UserRole.USER);
 			LOG.info("Created user with username '{}'", user.getUsername());
 			return new UserCreatedEvent(userRepository.save(user).toUserInfo());

@@ -21,6 +21,8 @@ import co.insecurity.springref.event.users.CreateUserEvent;
 import co.insecurity.springref.event.users.UserInfo;
 import co.insecurity.springref.persistence.service.UserPersistenceService;
 import co.insecurity.springref.security.RateLimitingDaoAuthenticationProvider;
+import co.insecurity.springref.security.service.BFPassCheckService;
+import co.insecurity.springref.security.service.PassCheckService;
 
 
 @Configuration
@@ -99,5 +101,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authProvider.setPasswordEncoder(passwordEncoder);
 		authProvider.setUserDetailsService(userService);
 		return authProvider;
+	}
+	
+	@Bean
+	public PassCheckService getPassCheckService() {
+		return new BFPassCheckService();
 	}
 }

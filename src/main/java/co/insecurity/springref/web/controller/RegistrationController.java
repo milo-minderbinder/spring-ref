@@ -17,6 +17,7 @@ import co.insecurity.springref.event.users.UserCreatedEvent;
 import co.insecurity.springref.event.users.UserInfo;
 import co.insecurity.springref.web.domain.Alerts;
 import co.insecurity.springref.web.domain.User;
+import co.insecurity.springref.web.domain.UserValidator;
 
 
 @Controller
@@ -34,19 +35,11 @@ public class RegistrationController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String registerUser(@Valid @ModelAttribute User user,
-			@ModelAttribute Alerts alerts,
+	public String registerUser(@ModelAttribute Alerts alerts,
+			@Valid @ModelAttribute User user,
 			BindingResult result, RedirectAttributes redirectAttrs, Model model) {
 		LOG.debug("In registerUser() method with user: '{}'", user.toString());
-		if (!(user.getPassword().equals(user.getPasswordConfirm()))) {
-			LOG.debug("Registration unsuccessful: unmatched passwords.");
-			alerts.addAlert(
-					"Please fix the errors in the registration form and resubmit.",
-					Alerts.AlertType.DANGER);
-			result.rejectValue("password", "error.user", "Password fields must match!");
-			result.rejectValue("passwordConfirm", "error.user", "Password fields must match!");
-			return "/register";
-		}
+		new UserValidator().validate(user,result);
 		if (result.hasErrors()) {
 			LOG.debug("Registration unsuccessful: validation failed.");
 			alerts.addAlert("Please fix the errors in the registration form and resubmit.",

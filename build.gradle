@@ -32,7 +32,7 @@ ext {
 	
 	// Security
 	springSecurityVersion = "3.2.6.RELEASE"
-	springSecuritySamlVersion = "1.0.0.RC2"
+	passcheckVersion = "1.0.0"
 	
 	// Template engine
 	thymeleafSpringVersion = "2.1.4.RELEASE"
@@ -115,7 +115,7 @@ dependencies {
 	compile "org.springframework.security:spring-security-web:$springSecurityVersion"
 	compile "org.springframework.security:spring-security-core:$springSecurityVersion"
 	compile "org.springframework.security:spring-security-config:$springSecurityVersion"
-	compile "org.springframework.security.extensions:spring-security-saml2-core:$springSecuritySamlVersion"
+	compile "co.insecurity:passcheck:$passcheckVersion"
 	
 	// Template engine
 	compile "org.thymeleaf:thymeleaf-spring4:$thymeleafSpringVersion"
