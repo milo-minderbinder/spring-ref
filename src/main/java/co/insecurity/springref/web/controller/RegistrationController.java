@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,9 @@ public class RegistrationController extends BaseController {
 			LoggerFactory.getLogger(RegistrationController.class);
 
 	
+	@Autowired
+	private UserValidator userValidator;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public String register() {
 		LOG.info("In register() method.");
@@ -39,7 +43,7 @@ public class RegistrationController extends BaseController {
 			@Valid @ModelAttribute User user,
 			BindingResult result, RedirectAttributes redirectAttrs, Model model) {
 		LOG.debug("In registerUser() method with user: '{}'", user.toString());
-		new UserValidator().validate(user,result);
+		userValidator.validate(user, result);
 		if (result.hasErrors()) {
 			LOG.debug("Registration unsuccessful: validation failed.");
 			alerts.addAlert("Please fix the errors in the registration form and resubmit.",

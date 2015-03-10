@@ -3,19 +3,23 @@ package co.insecurity.springref.web.domain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import co.insecurity.springref.security.service.PassCheckService;
 
+@Component
 public class UserValidator implements Validator {
 
 	private static final Logger LOG = 
 			LoggerFactory.getLogger(UserValidator.class);
 
+	
 	@Autowired
 	private PassCheckService passCheckService;
+	
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -64,6 +68,7 @@ public class UserValidator implements Validator {
 		String firstName = user.getFirstName();
 		String lastName = user.getLastName();
 		
+		LOG.info("passCheckService: {}", passCheckService);
 		if (passCheckService.isCommon(password))
 			return false;
 		return true;

@@ -2,6 +2,7 @@ package co.insecurity.springref.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,8 @@ public class UserController extends BaseController {
 	private static final Logger LOG = 
 			LoggerFactory.getLogger(UserController.class);
 
+	@Autowired
+	private UserValidator userValidator;
 	
 	@RequestMapping(value="viewProfile", method=RequestMethod.GET)
 	public String viewProfile(@ModelAttribute User user) {
@@ -40,7 +43,7 @@ public class UserController extends BaseController {
 			BindingResult result, RedirectAttributes redirectAttrs, Model model) {
 		LOG.debug("In editProfile() view with user: '{}'", user.toString());
 		boolean passwordChanged = passwordFieldChanged(user);
-		new UserValidator().validate(user, result);
+		userValidator.validate(user, result);
 		if (result.hasErrors()) {
 			LOG.debug("Edit profile unsuccessful: validation failed.");
 			alerts.addAlert("Please fix the errors in the form and resubmit.",
@@ -74,7 +77,7 @@ public class UserController extends BaseController {
 		LOG.debug(String.format(
 				"In doEditProfileConfirm() view with updatedUser: %s", 
 				updatedUser.toString()));
-		ValidationUtils.invokeValidator(new UserValidator(), updatedUser, result);
+		ValidationUtils.invokeValidator(userValidator, updatedUser, result);
 		if (result.hasErrors()) {
 			alerts.addAlert("Please fix the errors in the form and resubmit.",
 					Alerts.AlertType.DANGER);
