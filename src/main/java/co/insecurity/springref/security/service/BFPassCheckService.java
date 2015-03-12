@@ -1,6 +1,7 @@
 package co.insecurity.springref.security.service;
 
 import co.insecurity.util.passcheck.PassCheck;
+import co.insecurity.util.passcheck.config.PassCheckConfig;
 
 
 public class BFPassCheckService implements PassCheckService {
@@ -9,7 +10,11 @@ public class BFPassCheckService implements PassCheckService {
 	
 	
 	public BFPassCheckService() {
-			passcheck = new PassCheck();
+		PassCheckConfig config = PassCheckConfig.getConfig()
+				.withFalsePositiveProbability(0.001)
+				.withMinLength(9)
+				.withIgnoreCase(true);
+		passcheck = new PassCheck(config);
 	}
 	
 	@Override
