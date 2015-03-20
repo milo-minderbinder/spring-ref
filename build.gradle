@@ -32,7 +32,7 @@ ext {
 	
 	// Security
 	springSecurityVersion = "3.2.6.RELEASE"
-	passcheckVersion = "1.0.0"
+	passwordPolicyVersion = "1.0.0"
 	
 	// Template engine
 	thymeleafSpringVersion = "2.1.4.RELEASE"
@@ -80,6 +80,7 @@ repositories {
 	maven { url 'http://repo.spring.io/plugins-release' }
 	maven { url 'http://repo.spring.io/release' }
 	maven { url 'http://repo.spring.io/milestone' }
+	maven { url 'https://raw.githubusercontent.com/Baqend/Orestes-Bloomfilter/master/maven-repo' }
 }
 
 dependencies {
@@ -115,7 +116,7 @@ dependencies {
 	compile "org.springframework.security:spring-security-web:$springSecurityVersion"
 	compile "org.springframework.security:spring-security-core:$springSecurityVersion"
 	compile "org.springframework.security:spring-security-config:$springSecurityVersion"
-	compile "co.insecurity:passcheck:$passcheckVersion"
+	compile "co.insecurity:password-policy:$passwordPolicyVersion"
 	
 	// Template engine
 	compile "org.thymeleaf:thymeleaf-spring4:$thymeleafSpringVersion"

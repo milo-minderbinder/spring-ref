@@ -8,7 +8,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import co.insecurity.springref.security.service.PassCheckService;
+import co.insecurity.security.policy.PasswordPolicy;
+
 
 @Component
 public class UserValidator implements Validator {
@@ -16,10 +17,8 @@ public class UserValidator implements Validator {
 	private static final Logger LOG = 
 			LoggerFactory.getLogger(UserValidator.class);
 
-	
 	@Autowired
-	private PassCheckService passCheckService;
-	
+	private PasswordPolicy passwordPolicy;
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -68,7 +67,7 @@ public class UserValidator implements Validator {
 					"Password must be at least 9 characters long, and must contain a mixture "
 					+ "of upper- and lower-case letters, and numbers.");
 		}
-		else if (passCheckService.isCommon(password)) {
+		else if (!passwordPolicy.checkCompliance(password)) {
 			LOG.debug("Password validation failed: password is too common.");
 			errors.rejectValue("password", "field.policy", 
 					"Password is too common and could be easily guessed.");

@@ -16,13 +16,12 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import co.insecurity.security.policy.SimplePasswordPolicy;
 import co.insecurity.springref.core.domain.UserRole;
 import co.insecurity.springref.event.users.CreateUserEvent;
 import co.insecurity.springref.event.users.UserInfo;
 import co.insecurity.springref.persistence.service.UserPersistenceService;
 import co.insecurity.springref.security.RateLimitingDaoAuthenticationProvider;
-import co.insecurity.springref.security.service.BFPassCheckService;
-import co.insecurity.springref.security.service.PassCheckService;
 
 
 @Configuration
@@ -52,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				passwordEncoder.encode(adminPassword));
 		adminUser.getRoles().add(UserRole.ADMIN);
 		userService.createUser(new CreateUserEvent(adminUser));
+		LOG.debug("Added default admin user: {}", adminUser);
 	}
 	
 	@Override
@@ -93,6 +93,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
+	public SimplePasswordPolicy getPasswordPolicy() {
+		return new SimplePasswordPolicy();
+	}
+	
+	@Bean
 	public AuthenticationProvider getAuthenticationProvider(
 			@Value("${rateLimitingAuthenticationProvider.attemptsPerInterval}") int attemptsPerInterval,
 			@Value("${rateLimitingAuthenticationProvider.rateLimit}") double rateLimit) {
@@ -101,10 +106,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authProvider.setPasswordEncoder(passwordEncoder);
 		authProvider.setUserDetailsService(userService);
 		return authProvider;
-	}
-	
-	@Bean
-	public PassCheckService getPassCheckService() {
-		return new BFPassCheckService();
 	}
 }
