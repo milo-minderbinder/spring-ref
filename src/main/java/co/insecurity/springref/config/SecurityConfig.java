@@ -16,12 +16,13 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import co.insecurity.security.policy.SimplePasswordPolicy;
+import co.insecurity.security.policy.PasswordPolicy;
 import co.insecurity.springref.core.domain.UserRole;
 import co.insecurity.springref.event.users.CreateUserEvent;
 import co.insecurity.springref.event.users.UserInfo;
 import co.insecurity.springref.persistence.service.UserPersistenceService;
 import co.insecurity.springref.security.RateLimitingDaoAuthenticationProvider;
+import co.insecurity.springref.security.policy.SimplePasswordPolicy;
 
 
 @Configuration
@@ -93,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public SimplePasswordPolicy getPasswordPolicy() {
+	public PasswordPolicy getPasswordPolicy() {
 		return new SimplePasswordPolicy();
 	}
 	

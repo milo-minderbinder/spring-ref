@@ -1,5 +1,7 @@
 package co.insecurity.springref.web.domain;
 
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import co.insecurity.security.policy.PasswordPolicy;
+import co.insecurity.security.policy.assertion.PolicyAssertion;
 
 
 @Component
@@ -67,12 +70,14 @@ public class UserValidator implements Validator {
 					"Password must be at least 9 characters long, and must contain a mixture "
 					+ "of upper- and lower-case letters, and numbers.");
 		}
-		else if (!passwordPolicy.checkCompliance(password)) {
-			LOG.debug("Password validation failed: password is too common.");
-			errors.rejectValue("password", "field.policy", 
-					"Password is too common and could be easily guessed.");
-			errors.rejectValue("passwordConfirm", "field.policy", 
-					"Password is too common and could be easily guessed.");
+		Set<PolicyAssertion.Result> violations = 
+				PasswordPolicy.getViolations(passwordPolicy.evaluate(password));
+		if (!violations.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+			for (PolicyAssertion.Result violation : violations)
+				sb.append(violation.getReason() + " ");
+			errors.rejectValue("password",  "field.policy", sb.toString());
+			errors.rejectValue("passwordConfirm",  "field.policy", sb.toString());
 		}
 	}
 	

@@ -21,7 +21,9 @@ public class User {
 		this(null, null, new HashSet<UserRole>(), null, null);
 	}
 	
-	public User(String username, String password, Set<UserRole> roles, String firstName, String lastName) {
+	public User(String username, String password, 
+			Set<UserRole> roles, 
+			String firstName, String lastName) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
