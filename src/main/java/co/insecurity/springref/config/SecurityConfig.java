@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import co.insecurity.security.policy.PasswordPolicy;
+import co.insecurity.policy.PasswordPolicy;
 import co.insecurity.springref.core.domain.UserRole;
 import co.insecurity.springref.event.users.CreateUserEvent;
 import co.insecurity.springref.event.users.UserInfo;

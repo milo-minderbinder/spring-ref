@@ -32,7 +32,7 @@ ext {
 	
 	// Security
 	springSecurityVersion = "3.2.6.RELEASE"
-	passwordPolicyVersion = "1.0.0"
+	insecurityPolicyVersion = "1.0.0"
 	
 	// Template engine
 	thymeleafSpringVersion = "2.1.4.RELEASE"
@@ -116,7 +116,7 @@ dependencies {
 	compile "org.springframework.security:spring-security-web:$springSecurityVersion"
 	compile "org.springframework.security:spring-security-core:$springSecurityVersion"
 	compile "org.springframework.security:spring-security-config:$springSecurityVersion"
-	compile "co.insecurity:password-policy:$passwordPolicyVersion"
+	compile "co.insecurity:policy:$insecurityPolicyVersion"
 	
 	// Template engine
 	compile "org.thymeleaf:thymeleaf-spring4:$thymeleafSpringVersion"

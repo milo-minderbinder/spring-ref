@@ -1,7 +1,5 @@
 package co.insecurity.springref.web.domain;
 
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +8,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import co.insecurity.security.policy.PasswordPolicy;
-import co.insecurity.security.policy.assertion.PolicyAssertion;
+import co.insecurity.policy.PasswordPolicy;
+import co.insecurity.policy.directive.Directive;
 
 
 @Component
@@ -46,7 +44,7 @@ public class UserValidator implements Validator {
 		LOG.debug("Validating password fields for user: {}", user.toString());
 		String password = user.getPassword();
 		String passwordConfirm = user.getPasswordConfirm();
-		if ((password == null || password.isEmpty()) 
+		if ((password == null || password.isEmpty())
 				|| (passwordConfirm == null || passwordConfirm.isEmpty())) {
 			LOG.debug("Password validation failed: unmatched passwords.");
 			errors.rejectValue("password", "field.empty", 
@@ -61,14 +59,18 @@ public class UserValidator implements Validator {
 			errors.rejectValue("passwordConfirm", "field.unmatchedPassword", 
 					"Password fields must match!");
 		}
-		Set<PolicyAssertion.Result> violations = 
-				PasswordPolicy.getViolations(passwordPolicy.evaluate(password));
-		if (!violations.isEmpty()) {
-			for (PolicyAssertion.Result violation : violations) {
-				errors.rejectValue("password",  "field.policy", violation.getReason());
-				errors.rejectValue("passwordConfirm",  "field.policy", violation.getReason());
-			}
-		}
+		passwordPolicy.getViolations(password).forEach(violation -> {
+			errors.rejectValue("password",  "field.policy", violation.toString());
+			errors.rejectValue("passwordConfirm",  "field.policy", violation.toString());
+		});
+//		Map<PolicyAssertion, Result> violations = 
+//				PasswordPolicy.getViolations(passwordPolicy.evaluate(password));
+//		if (!violations.isEmpty()) {
+//			for (PolicyAssertion.Result violation : violations.values()) {
+//				errors.rejectValue("password",  "field.policy", violation.getReason());
+//				errors.rejectValue("passwordConfirm",  "field.policy", violation.getReason());
+//			}
+//		}
 	}
 	
 	private boolean passwordFieldChanged(User user) {
