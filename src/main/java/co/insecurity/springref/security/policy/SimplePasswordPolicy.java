@@ -37,9 +37,10 @@ public class SimplePasswordPolicy extends PasswordPolicy {
 			BloomFilter<String> filter = (new FilterBuilder())
 					.expectedElements(dictionary.getNumWords())
 					.falsePositiveProbability(0.001)
-//					.redisBacked(true)
-//					.redisHost("redis")
-//					.redisPort(6379)
+					.redisBacked(true)
+					.name("SimplePasswordPolicy")
+					.redisHost("redis")
+					.redisPort(6379)
 					.buildBloomFilter();
 			BFDictionaryDirective bfDictionaryDirective = 
 					new BFDictionaryDirective(filter);
@@ -47,6 +48,7 @@ public class SimplePasswordPolicy extends PasswordPolicy {
 				LOG.debug("Loading Dictionary into {}", bfDictionaryDirective);
 				bfDictionaryDirective.loadDictionary(dictionary);
 			}
+			this.addDirective(bfDictionaryDirective);
 		} catch (IOException e) {
 			LOG.error("Failed to construct and add BFDictionaryDirective: {}", e);
 		}
