@@ -8,12 +8,14 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
@@ -59,6 +61,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		resolver.setTemplateMode("HTML5");
 		resolver.setCacheable(false);
 		return resolver;
+	}
+	
+	@Bean
+	public HandlerExceptionResolver exceptionResolver() {
+		SimpleMappingExceptionResolver exceptionResolver = 
+				new SimpleMappingExceptionResolver();
+		exceptionResolver.setDefaultErrorView("error");
+		return exceptionResolver;
 	}
 	
 	@Bean

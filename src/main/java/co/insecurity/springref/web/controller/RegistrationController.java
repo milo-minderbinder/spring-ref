@@ -68,7 +68,6 @@ public class RegistrationController extends BaseController {
 		}
 	}
 	
-
 	@ModelAttribute("user")
 	private User getUser() {
 		return new User();

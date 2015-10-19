@@ -8,6 +8,7 @@ apply plugin: 'propdeps-maven'
 apply plugin: 'propdeps-eclipse'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 
 println "Project=" + project.name
 ext {

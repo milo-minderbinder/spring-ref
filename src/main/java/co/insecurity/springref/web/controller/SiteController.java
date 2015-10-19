@@ -2,6 +2,8 @@ package co.insecurity.springref.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,6 +36,15 @@ public class SiteController extends BaseController {
 			RedirectAttributes redirectAttrs,
 			Model model) {
 		LOG.debug("in login() view");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			alerts.addAlert("isAuthenticated: " + auth.isAuthenticated());
+			alerts.addAlert("auth: " + auth);
+			alerts.addAlert("principle: " + auth.getPrincipal());
+			alerts.addAlert("creds: " + auth.getCredentials());
+			alerts.addAlert("details: " + auth.getDetails());
+		}
+		
 		if (error != null)
 			alerts.addAlert("Invalid username or password!",
 					Alerts.AlertType.DANGER);
