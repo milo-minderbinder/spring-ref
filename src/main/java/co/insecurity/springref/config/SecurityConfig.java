@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -31,7 +33,10 @@ import co.insecurity.springref.security.policy.SimplePasswordPolicy;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SecurityConfig.class);
-	
+
+	@Autowired
+	private SessionRegistry sessionRegistry;
+
 	@Autowired
 	private UserPersistenceService userService;
 	
@@ -78,14 +83,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 				.maximumSessions(1)
 				.expiredUrl("/login?logout")
+				.sessionRegistry(sessionRegistry)
 				.and()
 				.invalidSessionUrl("/login?logout");
+		LOG.info("SessionRegistry in configure(): " + sessionRegistry.toString());
 	}
 	
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
+	}
+
+	@Bean
+	public SessionRegistry getSessionRegistry() {
+		SessionRegistry sessionRegistry1 = new SessionRegistryImpl();
+		LOG.info("SessionRegistry in getSessionRegistry(): " + sessionRegistry1.toString());
+		return sessionRegistry1;
 	}
 	
 	@Bean
