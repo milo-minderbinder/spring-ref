@@ -161,3 +161,12 @@ eclipse {
 task wrapper(type: Wrapper) { 
 	gradleVersion = '2.1' 
 }
+
+task exportDependencies() << {
+	configurations.findAll().each { config ->
+		copy {
+			from config
+			into "${project.buildDir}/exported-deps/"
+		}
+	}
+}
