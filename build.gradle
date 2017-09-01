@@ -5,7 +5,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'propdeps'
 apply plugin: 'propdeps-maven'
 
-println "Project=" + project.name
+sourceCompatibility = 1.8
+
 ext {
     // Application container
     javaxServletVersion = "3.0.1"
@@ -15,23 +16,23 @@ ext {
     jasyptSpring31Version = "1.9.2"
 
     // MVC
-    springVersion = "4.1.5.RELEASE"
+    springVersion = "4.3.10.RELEASE"
 
     // Database
     postgresVersion = "9.4-1201-jdbc41"
     h2Version = "1.4.185"
-    springDataJpaVersion = "1.7.1.RELEASE"
+    springDataJpaVersion = "1.11.6.RELEASE"
     hibernateJpaApiVersion = "1.0.0.Final"
     hibernateEntityManagerVersion = "4.3.8.Final"
     cglibVersion = "3.1"
 
     // Security
-    springSecurityVersion = "3.2.6.RELEASE"
+    springSecurityVersion = "4.2.3.RELEASE"
     insecurityPolicyVersion = "1.0.0"
 
     // Template engine
-    thymeleafSpringVersion = "2.1.4.RELEASE"
-    thymeleafSpringSecurityVersion = "2.1.1.RELEASE"
+    thymeleafSpringVersion = "3.0.7.RELEASE"
+    thymeleafSpringSecurityVersion = "3.0.2.RELEASE"
 
     // Validation
     javaxValidationApiVersion = "1.1.0.Final"
@@ -99,7 +100,7 @@ dependencies {
 
     // Template engine
     compile "org.thymeleaf:thymeleaf-spring4:$thymeleafSpringVersion"
-    compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity3:$thymeleafSpringSecurityVersion"
+    compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity4:$thymeleafSpringSecurityVersion"
 
     // Validation
     compile "javax.validation:validation-api:$javaxValidationApiVersion"

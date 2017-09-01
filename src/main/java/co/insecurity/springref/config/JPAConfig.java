@@ -1,11 +1,6 @@
 package co.insecurity.springref.config;
 
-import java.sql.SQLException;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
+import co.insecurity.springref.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,71 +16,73 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import co.insecurity.springref.persistence.repository.UserRepository;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "co.insecurity.springref.persistence.repository", 
-	includeFilters = @ComponentScan.Filter(value = {UserRepository.class}, type = FilterType.ASSIGNABLE_TYPE))
+@EnableJpaRepositories(basePackages = "co.insecurity.springref.persistence.repository",
+        includeFilters = @ComponentScan.Filter(value = {UserRepository.class}, type = FilterType.ASSIGNABLE_TYPE))
 @EnableTransactionManagement
 public class JPAConfig {
-	
-	@Value("${database.url}")
-	private String databaseURL;
-	
-	@Value("${database.username}")
-	private String databaseUsername;
-	
-	@Value("${database.password}")
-	private String databasePassword;
-	
+
+    @Value("${database.url}")
+    private String databaseURL;
+
+    @Value("${database.username}")
+    private String databaseUsername;
+
+    @Value("${database.password}")
+    private String databasePassword;
+
 	/*
-	@Bean
+    @Bean
 	public DataSource dataSource() throws SQLException {
 		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 		return builder.setType(EmbeddedDatabaseType.H2).build();
 	}
 	*/
-	
-	@Bean
-	public DataSource dataSource() throws SQLException {
-		DriverManagerDataSource source = new DriverManagerDataSource();
-		source.setDriverClassName(org.postgresql.Driver.class.getName());
-		source.setUrl(databaseURL);
-		source.setUsername(databaseUsername);
-		source.setPassword(databasePassword);
-		return source;
-	}
 
-	@Bean
-	public EntityManagerFactory entityManagerFactory() throws SQLException {
-		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		vendorAdapter.setDatabase(Database.POSTGRESQL);
-		vendorAdapter.setShowSql(true);
-		vendorAdapter.setGenerateDdl(true);
+    @Bean
+    public DataSource dataSource() throws SQLException {
+        DriverManagerDataSource source = new DriverManagerDataSource();
+        source.setDriverClassName(org.postgresql.Driver.class.getName());
+        source.setUrl(databaseURL);
+        source.setUsername(databaseUsername);
+        source.setPassword(databasePassword);
+        return source;
+    }
 
-		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("co.insecurity.springref.persistence.domain");
-		factory.setDataSource(dataSource());
-		factory.afterPropertiesSet();
-		return factory.getObject();
-	}
+    @Bean
+    public EntityManagerFactory entityManagerFactory() throws SQLException {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setDatabase(Database.POSTGRESQL);
+        vendorAdapter.setShowSql(true);
+        vendorAdapter.setGenerateDdl(true);
 
-	@Bean
-	public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
-		return entityManagerFactory.createEntityManager();
-	}
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("co.insecurity.springref.persistence.domain");
+        factory.setDataSource(dataSource());
+        factory.afterPropertiesSet();
+        return factory.getObject();
+    }
 
-	@Bean
-	public PlatformTransactionManager transactionManager() throws SQLException {
+    @Bean
+    public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
+        return entityManagerFactory.createEntityManager();
+    }
 
-		JpaTransactionManager txManager = new JpaTransactionManager();
-		txManager.setEntityManagerFactory(entityManagerFactory());
-		return txManager;
-	}
+    @Bean
+    public PlatformTransactionManager transactionManager() throws SQLException {
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory());
+        return txManager;
+    }
 
-	@Bean
-	public HibernateExceptionTranslator hibernateExceptionTranslator() {
-		return new HibernateExceptionTranslator();
-	}
+    @Bean
+    public HibernateExceptionTranslator hibernateExceptionTranslator() {
+        return new HibernateExceptionTranslator();
+    }
 }
