@@ -31,7 +31,7 @@ import co.insecurity.springref.persistence.service.UserPersistenceEventHandler;
 public class User implements UserDetails, Serializable {
 
 	private static final Logger LOG = 
-			LoggerFactory.getLogger(UserPersistenceEventHandler.class);
+			LoggerFactory.getLogger(User.class);
 	private static final long serialVersionUID = 7832409291921802512L;
 
 	

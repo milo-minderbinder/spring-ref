@@ -11,10 +11,10 @@ import co.insecurity.springref.event.users.*;
 @Service
 public interface UserPersistenceService extends UserDetailsService {
 
-	public UserCreatedEvent createUser(CreateUserEvent createUserEvent);
-	public UserDeletedEvent deleteUser(DeleteUserEvent deleteUserEvent);
-	public UserUpdatedEvent updateUser(UpdateUserEvent updateUserEvent);
-	public UserInfoEvent requestUserInfo(RequestUserInfoEvent requestUserDetailsEvent);
-	public AllUsersEvent requestAllUsers(RequestAllUsersEvent requestAllUsersEvent);
-	public User loadUserByUsername(String username) throws UsernameNotFoundException;
+	UserCreatedEvent createUser(CreateUserEvent createUserEvent);
+	UserDeletedEvent deleteUser(DeleteUserEvent deleteUserEvent);
+	UserUpdatedEvent updateUser(UpdateUserEvent updateUserEvent);
+	UserInfoEvent requestUserInfo(RequestUserInfoEvent requestUserDetailsEvent);
+	AllUsersEvent requestAllUsers(RequestAllUsersEvent requestAllUsersEvent);
+	User loadUserByUsername(String username) throws UsernameNotFoundException;
 }

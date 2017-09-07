@@ -17,7 +17,6 @@ public class ServiceConfig {
 
     @Bean
     public UserPersistenceService userPersistenceService() {
-        UserPersistenceService userService = new UserPersistenceEventHandler(userRepository);
-        return userService;
+        return new UserPersistenceEventHandler(userRepository);
     }
 }
