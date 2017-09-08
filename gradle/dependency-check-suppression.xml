@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+   <suppress>
+      <notes><![CDATA[
+      file name: validation-api-1.1.0.Final.jar
+      ]]></notes>
+      <gav regex="true">^javax\.validation:validation-api:.*$</gav>
+      <cpe>cpe:/a:bean_project:bean</cpe>
+   </suppress>
+</suppressions>
