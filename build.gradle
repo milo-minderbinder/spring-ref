@@ -1,3 +1,19 @@
+buildscript {
+    def propdepsPluginVersion = "0.0.7"
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
+    }
+
+    dependencies {
+        classpath "org.springframework.build.gradle:propdeps-plugin:$propdepsPluginVersion"
+        classpath 'org.owasp:dependency-check-gradle:2.1.1'
+    }
+}
+apply plugin: 'org.owasp.dependencycheck'
+
 apply plugin: 'war'
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -19,12 +35,10 @@ ext {
     springVersion = "4.3.10.RELEASE"
 
     // Database
-    postgresVersion = "9.4-1201-jdbc41"
-    h2Version = "1.4.185"
+    postgresVersion = '42.1.4'
     springDataJpaVersion = "1.11.6.RELEASE"
     hibernateJpaApiVersion = "1.0.0.Final"
     hibernateCoreVersion = "5.2.10.Final"
-    cglibVersion = "3.1"
 
     // Security
     springSecurityVersion = "4.2.3.RELEASE"
@@ -36,7 +50,7 @@ ext {
 
     // Validation
     javaxValidationApiVersion = "1.1.0.Final"
-    hibernateValidatorVersion = "5.1.3.Final"
+    hibernateValidatorVersion = "5.4.1.Final"
 
     // Logging
     slf4jVersion = "1.7.10"
@@ -45,20 +59,6 @@ ext {
     junitVersion = "4.12"
     mockitoVersion = "1.10.19"
     hamcrestVersion = "1.3"
-}
-
-buildscript {
-    def propdepsPluginVersion = "0.0.7"
-
-    repositories {
-        maven {
-            url 'http://repo.spring.io/plugins-release'
-        }
-    }
-
-    dependencies {
-        classpath "org.springframework.build.gradle:propdeps-plugin:$propdepsPluginVersion"
-    }
 }
 
 repositories {
@@ -114,6 +114,15 @@ dependencies {
     testCompile "org.mockito:mockito-core:$mockitoVersion"
     testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
 }
+
+dependencyCheck {
+    suppressionFile = file("${rootDir}/gradle/dependency-check-suppression.xml")
+    format = 'ALL'
+    analyzers {
+        experimentalEnabled = true
+    }
+}
+check.dependsOn dependencyCheckAnalyze
 
 test {
     testLogging {
