@@ -1,18 +1,16 @@
 package co.insecurity.springref.persistence.service;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
+import co.insecurity.springref.core.domain.UserRole;
+import co.insecurity.springref.event.users.*;
+import co.insecurity.springref.persistence.domain.User;
+import co.insecurity.springref.persistence.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.insecurity.springref.core.domain.UserRole;
-import co.insecurity.springref.event.users.*;
-import co.insecurity.springref.persistence.domain.User;
-import co.insecurity.springref.persistence.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserPersistenceEventHandler implements UserPersistenceService {

@@ -23,7 +23,7 @@ ext {
     h2Version = "1.4.185"
     springDataJpaVersion = "1.11.6.RELEASE"
     hibernateJpaApiVersion = "1.0.0.Final"
-    hibernateEntityManagerVersion = "4.3.8.Final"
+    hibernateCoreVersion = "5.2.10.Final"
     cglibVersion = "3.1"
 
     // Security
@@ -84,13 +84,11 @@ dependencies {
     // Database
     compile "org.springframework.data:spring-data-jpa:$springDataJpaVersion"
     compile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:$hibernateJpaApiVersion"
-    compile "org.hibernate:hibernate-entitymanager:$hibernateEntityManagerVersion"
+    compile "org.hibernate:hibernate-core:$hibernateCoreVersion"
     ['spring-orm', 'spring-aop', 'spring-beans', 'spring-tx', 'spring-expression', 'spring-context'].each {
         compile "org.springframework:$it:$springVersion"
     }
-    compile "cglib:cglib:$cglibVersion"
     compile "org.postgresql:postgresql:$postgresVersion"
-    runtime "com.h2database:h2:$h2Version"
 
     // Security
     compile "org.springframework.security:spring-security-web:$springSecurityVersion"
