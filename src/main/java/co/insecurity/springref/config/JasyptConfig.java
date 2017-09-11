@@ -15,31 +15,31 @@ import org.springframework.core.io.Resource;
 
 @Configuration
 public class JasyptConfig {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(JasyptConfig.class);
 
-	@Bean
-	static StringPBEConfig environmentVariablesConfiguration() {
-		EnvironmentStringPBEConfig config = new EnvironmentStringPBEConfig();
-		config.setAlgorithm("PBEWithSHA1AndDESEDE");
-		config.setPasswordEnvName("SPRINGREF_CONFIG_PW");
-		return config;
-	}
-	
-	@Bean
-	public static PBEStringEncryptor stringEncryptor() {
-		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-		encryptor.setConfig(environmentVariablesConfiguration());
-		return encryptor;
-	}
+    private static final Logger LOG = LoggerFactory.getLogger(JasyptConfig.class);
 
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer properties() {
-		EncryptablePropertySourcesPlaceholderConfigurer propertyEncryptor = 
-				new EncryptablePropertySourcesPlaceholderConfigurer(stringEncryptor());
-		Resource[] resources = new ClassPathResource[] { new ClassPathResource("setup.properties") };
-		propertyEncryptor.setLocations(resources);
-		propertyEncryptor.setIgnoreUnresolvablePlaceholders(true);
-		return propertyEncryptor;
-	}
+    @Bean
+    static StringPBEConfig environmentVariablesConfiguration() {
+        EnvironmentStringPBEConfig config = new EnvironmentStringPBEConfig();
+        config.setAlgorithm("PBEWithSHA1AndDESEDE"); // This is terrible
+        config.setPasswordEnvName("SPRINGREF_CONFIG_PW");
+        return config;
+    }
+
+    @Bean
+    public static PBEStringEncryptor stringEncryptor() {
+        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+        encryptor.setConfig(environmentVariablesConfiguration());
+        return encryptor;
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer properties() {
+        EncryptablePropertySourcesPlaceholderConfigurer propertyEncryptor =
+                new EncryptablePropertySourcesPlaceholderConfigurer(stringEncryptor());
+        Resource[] resources = new ClassPathResource[]{new ClassPathResource("setup.properties")};
+        propertyEncryptor.setLocations(resources);
+        propertyEncryptor.setIgnoreUnresolvablePlaceholders(true);
+        return propertyEncryptor;
+    }
 }

@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="icon" href="../../resources/images/favicon.ico" />
 
-	<title>InSecurity.co</title>
+	<title>InSecurity.co - Error</title>
 	<!-- Bootstrap core CSS -->
 	<link href="../../resources/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -31,13 +31,13 @@
 			</ul>
 			<h3 class="text-muted">InSecurity.co</h3>
 		</div>
-		<div class="jumbotron" th:replace="fragments/top :: jumbotron">
-			<h1>Jumbotron</h1>
-		</div>
-
 		<div class="row marketing">
 			<div class="span9">
-				<div th:replace="fragments/top :: alerts"></div>
+				<div th:fragment="exceptions">
+					<div name="exception" class="alert alert-warning">
+						An error has occurred.
+					</div>
+				</div>
 			</div>
 		</div>
 		
