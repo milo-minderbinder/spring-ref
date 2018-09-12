@@ -63,7 +63,8 @@
 		</div>
 
 		<div th:fragment="alerts">
-			<div name="alert" th:each="alert : ${alerts.getAlerts()}" class="alert" 
+			<!--/*@thymesVar id="alerts" type="co.insecurity.springref.web.domain.Alerts"*/-->
+			<div name="alert" th:each="alert : ${alerts.getAlerts()}" class="alert"
 				th:classappend="${alert.getValue()}" th:text="${alert.getKey()}"></div>
 		</div>
 

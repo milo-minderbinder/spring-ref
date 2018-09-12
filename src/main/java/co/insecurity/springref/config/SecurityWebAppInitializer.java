@@ -6,9 +6,9 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 
 @Order(1)
 public class SecurityWebAppInitializer extends AbstractSecurityWebApplicationInitializer {
-	
-	@Override
-	protected boolean enableHttpSessionEventPublisher() {
-		return true;
-	}
+
+    @Override
+    protected boolean enableHttpSessionEventPublisher() {
+        return true;
+    }
 }

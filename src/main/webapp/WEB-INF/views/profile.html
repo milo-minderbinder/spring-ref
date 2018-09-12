@@ -39,7 +39,7 @@
 					<div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
 						<label class="control-label" for="lastNameInput">Last Name:</label>
 						<input type="text" th:field="*{lastName}" class="form-control" id="lastNameInput" placeholder="Last" />
-						<p class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{lastName}"></p>
+						<p class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 					</div>
 					<div class="panel-group" id="accordion">
 						<div class="panel panel-info">
