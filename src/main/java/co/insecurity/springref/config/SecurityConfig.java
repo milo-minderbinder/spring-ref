@@ -37,6 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${rateLimitingAuthenticationProvider.rateLimit}")
     private double authNRateLimit;
 
+    @Value("${passwordPolicy.isRedisBacked}")
+    private boolean isPasswordPolicyRedisBacked;
+
     private final UserPersistenceService userService;
 
     public SecurityConfig(UserPersistenceService userService) {
@@ -129,7 +132,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public PasswordPolicy getPasswordPolicy() {
-        return new SimplePasswordPolicy(true);
+        return new SimplePasswordPolicy(isPasswordPolicyRedisBacked);
     }
 
     /**

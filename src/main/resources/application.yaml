@@ -1,0 +1,10 @@
+logging:
+  level:
+    root: warn
+    org.springframework.web: warn
+    org.springframework.security: warn
+    org.springframework.boot.autoconfigure: warn
+
+spring:
+  profiles:
+    active: production
