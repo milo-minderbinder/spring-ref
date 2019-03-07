@@ -73,7 +73,7 @@ public class UserPersistenceEventHandler implements UserPersistenceService {
     public UserInfoEvent requestUserInfo(
             RequestUserInfoEvent requestUserInfoEvent) {
         String username = requestUserInfoEvent.getUsername();
-        User user = userRepository.findOne(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             LOG.debug("Could not find user with username: {}", username);
             return UserInfoEvent.notFound(username);

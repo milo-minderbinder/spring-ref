@@ -1,0 +1,10 @@
+logging:
+  level:
+    root: info
+    org.springframework.web: info
+    org.springframework.security: debug
+    org.springframework.boot.autoconfigure: debug
+
+spring:
+  profiles:
+    active: test
