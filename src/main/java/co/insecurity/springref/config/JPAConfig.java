@@ -15,7 +15,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
@@ -47,7 +46,7 @@ public class JPAConfig {
 
     @Bean
     @Profile("production")
-    public EntityManagerFactory entityManagerFactory() throws SQLException {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws SQLException {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabase(Database.POSTGRESQL);
         vendorAdapter.setShowSql(true);
@@ -58,15 +57,7 @@ public class JPAConfig {
         factory.setPackagesToScan("co.insecurity.springref.persistence.domain");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
-        return factory.getObject();
-    }
-
-    @Bean
-    @Profile("production")
-    public PlatformTransactionManager transactionManager() throws SQLException {
-        JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setEntityManagerFactory(entityManagerFactory());
-        return txManager;
+        return factory;
     }
 
     @Bean(name = "dataSource")
@@ -86,17 +77,15 @@ public class JPAConfig {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("co.insecurity.springref.persistence.domain");
-        factory.setDataSource(dataSource());
+        factory.setDataSource(testDataSource());
 
         return factory;
-
     }
 
-    @Bean(name = "transactionManager")
-    @Profile("test")
-    public PlatformTransactionManager testTransactionManager() throws SQLException {
+    @Bean
+    public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) throws SQLException {
         JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setEntityManagerFactory(testEntityManagerFactory().getObject());
+        txManager.setEntityManagerFactory(entityManagerFactory.getObject());
         return txManager;
     }
 

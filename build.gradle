@@ -33,7 +33,7 @@ repositories {
     mavenCentral()
     jcenter()
     mavenLocal()
-    maven { url 'https://raw.githubusercontent.com/Baqend/Orestes-Bloomfilter/master/maven-repo' }
+    maven {url 'https://raw.githubusercontent.com/Baqend/Orestes-Bloomfilter/master/maven-repo'}
 }
 
 dependencies {
@@ -71,6 +71,6 @@ test {
     }
 }
 
-task ('wrapper', type: Wrapper) {
+task('wrapper', type: Wrapper) {
     gradleVersion = '4.10.3'
 }
