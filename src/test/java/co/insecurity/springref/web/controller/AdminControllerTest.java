@@ -9,8 +9,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.*;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,13 +24,17 @@ public class AdminControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void admin() throws Exception {
-        this.mvc.perform(get("https://localhost/admin")).andExpect(status().isOk());
+    public void thatAdminUserCanAccessAdminPage() throws Exception {
+        this.mvc.perform(
+                get("https://localhost/admin"))
+                .andExpect(status().isOk());
     }
 
-    @Test
+    @Test()
     @WithMockUser(roles = "USER")
-    public void notAdmin() throws Exception {
-        this.mvc.perform(get("https://localhost/admin")).andExpect(status().isForbidden());
+    public void thatNonAdminUserCannotAccessAdminPage() throws Exception {
+        this.mvc.perform(
+                get("https://localhost/admin"))
+                .andExpect(status().isForbidden());
     }
 }
